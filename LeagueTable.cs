@@ -77,28 +77,28 @@ namespace BucherFussballLiga
           }
       }
 
-      public void SortAndDisplayTable(string sortCriteria)
+      public void SortAndDisplayTable(SortCriteria sortCriteria)
       {
           var sortedTeams = _teams.Values.ToList();
 
-          switch (sortCriteria.ToLower())
+          switch (sortCriteria)
           {
-              case "pointsdesc":
-                  sortedTeams = sortedTeams.OrderByDescending(t => t.Points).ThenByDescending(t => t.GoalDifference).ThenByDescending(t => t.Wins).ThenBy(t => t.Name).ToList();
+              case SortCriteria.Name:
+                  sortedTeams = sortedTeams.OrderBy(team => team.Name).ToList();
                   break;
-              case "goaldesc":
-                  sortedTeams = sortedTeams.OrderByDescending(t => t.GoalDifference).ThenByDescending(t => t.Points).ThenByDescending(t => t.Wins).ThenBy(t => t.Name).ToList();
+              case SortCriteria.Points:
+                  sortedTeams = sortedTeams.OrderByDescending(t => t.Points).ToList();
                   break;
-              case "winsdesc":
-                  sortedTeams = sortedTeams.OrderByDescending(t => t.Wins).ThenByDescending(t => t.Points).ThenByDescending(t => t.GoalDifference).ThenBy(t => t.Name).ToList();
+              case SortCriteria.GoalDifference:
+                  sortedTeams = sortedTeams.OrderByDescending(t => t.GoalDifference).ToList();
                   break;
-              case "nameasc":
-                  sortedTeams = sortedTeams.OrderBy(t => t.Name).ToList();
-                  break;
+              case SortCriteria.NumberOfWins:
+                sortedTeams = sortedTeams.OrderByDescending(t => t.Wins).ToList();
+                break;
               default:
-                  sortedTeams = sortedTeams.OrderByDescending(t => t.Points).ThenByDescending(t => t.GoalDifference).ThenByDescending(t => t.Wins).ThenBy(t => t.Name).ToList();
+                  sortedTeams = sortedTeams.OrderByDescending(t => t.Points).ToList();
                   break;
-          }
+           }
 
           DisplayTable(sortedTeams);
       }

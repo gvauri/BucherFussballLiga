@@ -7,9 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace BucherFussballLiga
 {
-  internal class Program
-  {
-    public enum SortCriteria
+      public enum SortCriteria
     { 
       Points, 
       GoalDifference, 
@@ -17,6 +15,8 @@ namespace BucherFussballLiga
       Name,
       NULL
     }
+  internal class Program
+  {
     // Main method with possible parameters
     // args[0] - the filename in the format of "dayXX" 
     // args[1] - sorting criteria (optional, default is points)   
@@ -54,7 +54,7 @@ namespace BucherFussballLiga
 
       var leagueTable = new LeagueTable();
       leagueTable.ReadFile(fileName);
-      //leagueTable.SortAndDisplayTable(sortCriteria);
+      leagueTable.SortAndDisplayTable(sortCriteria);
     }
   }
 }

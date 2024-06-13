@@ -30,7 +30,7 @@ namespace BucherFussballLiga
         Environment.Exit(0);
       }
 
-      SortCriteria sortCriteria = SortCriteria.NULL;
+      SortCriteria sortCriteria = SortCriteria.Points;
       if(args.Length == 2)
       {
         switch(args[1])
@@ -53,8 +53,8 @@ namespace BucherFussballLiga
       }
 
       var leagueTable = new LeagueTable();
-      leagueTable.ProcessFiles(fileName);
-      leagueTable.SortAndDisplayTable(sortCriteria);
+      leagueTable.ReadFile(fileName);
+      //leagueTable.SortAndDisplayTable(sortCriteria);
     }
   }
 }

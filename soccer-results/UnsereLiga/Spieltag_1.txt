@@ -1,0 +1,6 @@
+Team F 3:1 Team J
+Team C 1:1 Team J
+Team K 1:3 Team L
+Team B 0:0 Team K
+Team A 3:2 Team D
+Team C 3:1 Team K

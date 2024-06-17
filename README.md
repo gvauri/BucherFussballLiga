@@ -86,6 +86,7 @@ dotnet run <folder> [<lastMatchday>] [<sortingCriteria>]
 ```
 
 # Running Unit Tests
+!For the UnitTests to work, private methods need to be set to public!
 ## Windows
 
 Unit tests for this project are implemented using NUnit and Visual Studio on Windows.<br>

@@ -10,7 +10,6 @@ namespace BucherFussballLiga
     }
   internal class Program
   {
-    // Main method parameters <folder> [<lastMatchday>] [<sortingCriteria>]
     static void Main(string[] args)
     {
       if (args.Length < 1 || args.Length > 3)

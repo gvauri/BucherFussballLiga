@@ -1,6 +1,6 @@
 # Overview
 
-BucherFussballLiga is a console application for managing and displaying a football league table. The program reads match data from text files, processes the data to update team statistics, and sorts the league table based on various criteria.
+BucherFussballLiga is a console application running on Linux for managing and displaying a football league table. The program reads match data from text files, processes the data to update team statistics, and sorts the league table based on various criteria.
 
 # Features
 

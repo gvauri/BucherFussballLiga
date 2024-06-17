@@ -1,6 +1,6 @@
 # Overview
 
-BucherFussballLiga is a console application for managing and displaying a football league table. The program reads match data from a text file, processes the data to update team statistics, and sorts the league table based on various criteria.
+BucherFussballLiga is a console application for managing and displaying a football league table. The program reads match data from text files, processes the data to update team statistics, and sorts the league table based on various criteria.
 
 # Features
 
@@ -23,10 +23,12 @@ TeamA ScoreA:ScoreB TeamB
 # Usage
 ## Command Line Parameters
 
-1. Filename:<br>
-    The first parameter is the name of the file containing match results (without the ".txt" extension). The file should be named in the format dayXX where XX are digits.
-2. Sorting Criteria:<br>
-    The second parameter (optional) specifies the sorting criteria for the league table. If not provided, the default sorting criteria is by points.
+1. Folder:<br>
+    The first parameter is the name of the folder containing match result files. The files should be named in the format dayXX.txt where XX are digits.
+2. Last Matchday (optional):<br>
+    The second parameter specifies the last matchday to include. If not provided, all matchdays are included.
+3. Sorting Criteria (optional):<br>
+    The third parameter specifies the sorting criteria for the league table. If not provided, the default sorting criteria is by points.
 
 ## Sorting Criteria Options
 
@@ -35,19 +37,19 @@ TeamA ScoreA:ScoreB TeamB
 -  Sort by Number of Wins
 -  Sort by Name
 
-## Example
+# Example
 
-To run the program with match data from day01.txt and sort by points:
+To run the program with match data from files in a foldr and sort by points:<br>
+```
+dotnet run <folder>
+```
 
+To run the program with match data from files in the "matches" folder, include matches up to the second matchday, and sort by goal difference:<br>
 ```
-dotnet run day01 1
+dotnet run <folder> 2 GoalDifference
 ```
 
-To run the program with match data from day02.txt and sort by goal difference:
 
-```
-dotnet run day02 2
-```
 # Output
 
 The program displays the league table in the console with the following columns:
@@ -55,15 +57,34 @@ The program displays the league table in the console with the following columns:
 - Rank
 - Name
 - Points
-- Wins/Losses/Draws
-- Goals Scored/Conceded
+- Wins
+- Losses
+- Draws
+- Goals For (GF)
+- Goals Against (GA)
+- Goal Difference (GD)
 
-The sorted column is indicated by a dashed line under the corresponding header.
 
 # Running the Application
 
-1. Ensure you have .NET 8 installed on your system.
-2. Clone the repository.
-3. Navigate to the project directory.
-4. Place your match data files in the project directory.
-5. Run the application using dotnet run with the appropriate parameters.
+1. Ensure you have .NET 8 installed on your system. 
+
+2. Clone the repository:
+```
+git clone <repository_url>
+```
+
+3. Navigate to the project directory:
+```
+cd <repository_name>
+```
+4. Place your match data files in the project directory under in a folder.
+
+5. Run the application using dotnet run with the appropriate parameters:
+```
+dotnet run <folder> [<lastMatchday>] [<sortingCriteria>]
+```
+
+# Dependencies
+
+.NET 8.0 SDK

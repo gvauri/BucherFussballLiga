@@ -85,6 +85,37 @@ cd BucherFussballLiga
 dotnet run <folder> [<lastMatchday>] [<sortingCriteria>]
 ```
 
+# Running Unit Tests
+## Windows
+
+Unit tests for this project are implemented using NUnit and Visual Studio on Windows.<br>
+
+1. Open the Solution in Visual Studio<br>
+    - Launch Visual Studio.<br>
+    - Navigate to File > Open > Project/Solution.<br>
+    - Browse to and select the FussballLiga.nUnitTest.csproj file.<br>
+
+2. Run Unit Tests<br>
+    - In Visual Studio's Test Explorer, you can see all the tests.<br>
+    - Click on Run All to execute all tests.<br>
+
+## Linux
+
+For Linux-based systems, you can run the tests using the dotnet test command in the terminal.
+
+1. Navigate to Test Project
+```sh
+cd FussballLiga.nUnitTest
+```
+
+2. Run Tests
+
+Execute the following command to run the tests:
+```sh
+dotnet test
+```
+This command will discover and run all the unit tests in the project.
+
 # Dependencies
 
 .NET 8.0 SDK

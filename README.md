@@ -71,12 +71,12 @@ The program displays the league table in the console with the following columns:
 
 2. Clone the repository:
 ```
-git clone <repository_url>
+git clone git@github.com:gvauri/BucherFussballLiga.git
 ```
 
 3. Navigate to the project directory:
 ```
-cd <repository_name>
+cd BucherFussballLiga
 ```
 4. Place your match data files in the project directory under in a folder.
 

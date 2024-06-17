@@ -61,17 +61,14 @@ namespace FussballLiga.nUnitTest
             _leagueTable.UpdateTeamStats(new Match { TeamA = "TeamA", ScoreA = 2, ScoreB = 1, TeamB = "TeamB" });
             _leagueTable.UpdateTeamStats(new Match { TeamA = "TeamC", ScoreA = 3, ScoreB = 1, TeamB = "TeamD" });
 
-            // Capture console output to verify the displayed table
             using (StringWriter sw = new StringWriter())
             {
-                Console.SetOut(sw); // Redirect console output
+                Console.SetOut(sw); 
 
                 _leagueTable.SortAndDisplayTable(SortCriteria.Points);
-
-                // Get the console output
+                
                 string consoleOutput = sw.ToString();
 
-                // Assert on the console output to verify the sorted teams
                 Assert.IsTrue(consoleOutput.Contains("TeamA"));
                 Assert.IsTrue(consoleOutput.Contains("TeamC"));
                 Assert.IsTrue(consoleOutput.Contains("TeamD"));

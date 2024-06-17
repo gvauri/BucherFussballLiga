@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-
 namespace BucherFussballLiga
 {
       public enum SortCriteria
@@ -17,43 +10,21 @@ namespace BucherFussballLiga
     }
   internal class Program
   {
-    // Main method with possible parameters
-    // args[0] - the filename in the format of "dayXX" 
-    // args[1] - sorting criteria (optional, default is points)   
+    // Main method parameters <folder> [<lastMatchday>] [<sortingCriteria>]
     static void Main(string[] args)
     {
-      //check/read parameters
-      string fileName = args.Length > 0 ? args[0] + ".txt" : null;
-      string pattern = @"^day\d{2}$";
-      if(fileName == null || !Regex.IsMatch(args[0], pattern))
+      if (args.Length < 1 || args.Length > 3)
       {
+        Console.WriteLine("Usage: BucherFussballLiga <folder> [<lastMatchday>] [<sortingCriteria>]");
         Environment.Exit(0);
       }
 
-      SortCriteria sortCriteria = SortCriteria.Points;
-      if(args.Length == 2)
-      {
-        switch(args[1])
-        {
-          case "1":
-            sortCriteria = SortCriteria.Points;
-            break;
-          case "2":
-            sortCriteria = SortCriteria.GoalDifference;
-            break;
-          case "3":
-            sortCriteria = SortCriteria.NumberOfWins;
-            break;
-          case "4":
-            sortCriteria =SortCriteria.Name;
-            break;
-          default:
-            throw new Exception("Invalid sorting criteria!");
-        }
-      }
+      string folder = args[0];
+      int lastMatchday = args.Length >= 2 && int.TryParse(args[1], out int day) ? day : int.MaxValue;
+      SortCriteria sortCriteria = args.Length == 3 && Enum.TryParse(args[2], out SortCriteria criteria) ? criteria : SortCriteria.Points;
 
       var leagueTable = new LeagueTable();
-      leagueTable.ReadFile(fileName);
+      leagueTable.ReadFile(folder, lastMatchday);
       leagueTable.SortAndDisplayTable(sortCriteria);
     }
   }

@@ -5,13 +5,21 @@ namespace BucherFussballLiga
   {
       private Dictionary<string, TeamStats> _teams = new Dictionary<string, TeamStats>();
 
-      public void ReadFile(string file)
+      public void ReadFile(string folder, int lastMatchday)
       {
-          var lines = File.ReadAllLines(file);
-          foreach (var line in lines)
+        var files = Directory.GetFiles(folder, "day*.txt")
+           .Where(f => int.TryParse(Regex.Match(f, @"\d+").Value, out int day) && day <= lastMatchday)
+           .OrderBy(f => f)
+           .ToArray();
+
+          foreach (var file in files)
           {
+            var lines = File.ReadAllLines(file);
+            foreach (var line in lines)
+            {
               var match = ParseLine(line);
-              //UpdateTeamStats(match);
+              UpdateTeamStats(match);
+            }
           }
       }
 
@@ -80,36 +88,73 @@ namespace BucherFussballLiga
       public void SortAndDisplayTable(SortCriteria sortCriteria)
       {
           var sortedTeams = _teams.Values.ToList();
-
           switch (sortCriteria)
           {
-              case SortCriteria.Name:
-                  sortedTeams = sortedTeams.OrderBy(team => team.Name).ToList();
-                  break;
-              case SortCriteria.Points:
-                  sortedTeams = sortedTeams.OrderByDescending(t => t.Points).ToList();
-                  break;
-              case SortCriteria.GoalDifference:
-                  sortedTeams = sortedTeams.OrderByDescending(t => t.GoalDifference).ToList();
-                  break;
-              case SortCriteria.NumberOfWins:
-                sortedTeams = sortedTeams.OrderByDescending(t => t.Wins).ToList();
-                break;
-              default:
-                  sortedTeams = sortedTeams.OrderByDescending(t => t.Points).ToList();
-                  break;
-           }
+            case SortCriteria.Points:
+            sortedTeams = _teams.Values
+                .OrderByDescending(t => t.Points)
+                .ThenByDescending(t => t.GoalDifference)
+                .ThenByDescending(t => t.Wins)
+                .ThenBy(t => t.Name)
+                .ToList();
+            break;
 
+            case SortCriteria.GoalDifference:
+            sortedTeams = _teams.Values
+                .OrderByDescending(t => t.GoalDifference)
+                .ThenByDescending(t => t.Points)
+                .ThenByDescending(t => t.Wins)
+                .ThenBy(t => t.Name)
+                .ToList();
+            break;
+
+            case SortCriteria.NumberOfWins:
+            sortedTeams = _teams.Values
+                .OrderByDescending(t => t.Wins)
+                .ThenByDescending(t => t.Points)
+                .ThenByDescending(t => t.GoalDifference)
+                .ThenBy(t => t.Name)
+                .ToList();
+            break;
+
+            case SortCriteria.Name:
+            sortedTeams = _teams.Values
+                .OrderBy(t => t.Name)
+                .ThenByDescending(t => t.Points)
+                .ThenByDescending(t => t.GoalDifference)
+                .ThenByDescending(t => t.Wins)
+                .ToList();
+            break;
+
+            default:
+            sortedTeams = _teams.Values
+                .OrderByDescending(t => t.Points)
+                .ThenByDescending(t => t.GoalDifference)
+                .ThenByDescending(t => t.Wins)
+                .ThenBy(t => t.Name)
+                .ToList();
+            break;
+          }
           DisplayTable(sortedTeams);
       }
 
       private void DisplayTable(List<TeamStats> sortedTeams)
       {
-          Console.WriteLine("{0, -5} {1, -20} {2, -7} {3, -15} {4, -20} {5, -15} {6, -10}", "Rank", "Name", "Points", "W/L/D", "Goals Scored/Conceded", "Goal Difference", "Description");
+          Console.WriteLine("{0,-5} {1,-20} {2,7} {3,7} {4,7} {5,7} {6,7} {7,7} {8,7}", "Rank", "Name", "Points", "Wins", "Losses", "Draws", "GF", "GA", "GD");
+
           for (int i = 0; i < sortedTeams.Count; i++)
           {
-              var team = sortedTeams[i];
-              Console.WriteLine("{0, -5} {1, -20} {2, -7} {3, -15} {4, -20} {5, -15} {6, -10}", i + 1, team.Name, team.Points, $"{team.Wins}/{team.Losses}/{team.Draws}", $"{team.GoalsScored}/{team.GoalsConceded}", team.GoalDifference, "");
+            var team = sortedTeams[i];
+            Console.WriteLine("{0,-5} {1,-20} {2,7} {3,7} {4,7} {5,7} {6,7} {7,7} {8,7}",
+                i + 1,
+                team.Name,
+                team.Points,
+                team.Wins,
+                team.Losses,
+                team.Draws,
+                team.GoalsScored,
+                team.GoalsConceded,
+                team.GoalDifference);
           }
       }
   }
